@@ -10,6 +10,6 @@
 
     "excludeFiles": [
         "build/modules/**",
-        "package.json",
+        "package.json"
     ]
 }
