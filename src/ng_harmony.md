@@ -32,40 +32,10 @@ import "angular";
 import "angular-ui-router";
 import bean from "fat/bean";
 import zest from "zest";
-import { Harmony } from "ng-harmony-core";
+import { Controller } from "ng-harmony-core";
 import { Log, NotImplementedError, MissingBehaviourError, BehaviourError, StateTransitionError } from "ng-harmony-log";
 import "ng-harmony-decorator";
 ```
-
-The Controller Base-Class is a starting point for all ng-controllers.
-
-```javascript
-export class Controller extends Harmony {
-    static set $register(descriptor) {
-        Object.getOwnPropertyNames(descriptor).forEach((module) => {
-            angular.module(module).controller(descriptor[module].name, this);
-        });
-    }
-
-	constructor (...args) {
-		super(...args);
-		let proto = this.constructor.prototype; Object.getOwnPropertyNames(this.constructor).forEach((fn, i) => {
-			if (typeof proto[key] === "function" &&
-				key[0] === "$") {
-				this.$scope[key.slice(1)] = this.$scope[key] = (..._args) => {
-					return fn.apply(this, _args);
-				};
-			}
-		});
-	}
-	_digest () {
-		try { this.$scope.$digest(); }
-		catch (ngEx) {}
-
-}
-Controller.$inject = "$scope";
-```
-
 The Component is an angular-integrated and stateful Controller ... that means, it is aware of its own plus parent and child states and is able to react to state transitions
 
 ```javascript
