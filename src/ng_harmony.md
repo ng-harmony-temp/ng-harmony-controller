@@ -28,8 +28,6 @@ This serves as literate-programming compiler-directive
 ## Compilation
 
 ```javascript
-import "angular";
-import "angular-router";
 import bean from "fat/bean";
 import zest from "zest";
 import { Controller } from "ng-harmony-core";
@@ -41,29 +39,6 @@ The EventedController ...
 Basically, you decouple the event-listening from your html and put it into your controller, right where the action is.
 
 Please use in conjunction with the Event-method-decorator, like so:
-
-```javascript
-class MyCtrl extends EventedController {
-    @Evented(
-        //you can specify a delegator
-        //sometimes it's necessary that the delegate isn't the same element as the ng-repeated one
-        //this is necessary in order to provide $scope.n -> your nth-clicked element
-    {
-        selector: "#myComp > ul.myList",
-        type: "click",
-        delegate: "a.superlink",
-        repeatable: "li.button"
-    }, {
-        //you can specify various events on a method
-        //the only really necessary item is the even source type
-        type: "hover"
-    })
-    mySuperMethod () {
-        console.log("You clicked the" + this.$scope.n + " item");
-        //oops, should do some handling of the different events above
-    }
-}
-`
 
 ```javascript
 export class EventedController extends Controller {
