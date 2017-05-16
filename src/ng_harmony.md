@@ -29,49 +29,12 @@ This serves as literate-programming compiler-directive
 
 ```javascript
 import "angular";
-import "angular-ui-router";
+import "angular-router";
 import bean from "fat/bean";
 import zest from "zest";
 import { Controller } from "ng-harmony-core";
 import { Log, NotImplementedError, MissingBehaviourError, BehaviourError, StateTransitionError } from "ng-harmony-log";
 import "ng-harmony-decorator";
-```
-The Component is an angular-integrated and stateful Controller ... that means, it is aware of its own plus parent and child states and is able to react to state transitions
-
-```javascript
-export class Component extends Controller {
-    constructor () {
-        super();
-
-        this.register();
-        this.subscribe("register.component.stateful", (o) => { this.LISTENERS = o; });
-    }
-    get LISTENERS () {
-        return this._LISTENERS || [];
-    }
-    set LISTENERS (...listeners) {
-        this._LISTENERS.concat(listeners.filter((newListener) => {
-            return !this._LISTENERS.filter((currentListener) => {
-                return (currentListener.name === newListener.name) && (currentListener.ctx === newListener.ctx);
-            }).length;
-        });
-    }
-    register () {
-        this.emit("register.component.stateful", {
-            name: this.constructor.name
-            ctx: this
-        });
-    }
-    subscribe (ev, callback) {
-        this.$scope.$on(ev, callback);
-    }
-    emit (ev, ...args) {
-        this.$scope.$emit(ev, ...args);
-    }
-    broadcast (ev, ...args) {
-        this.$scope.$broadcast(ev, ...args);
-    }
-}
 ```
 
 The EventedController ...
@@ -107,24 +70,24 @@ export class EventedController extends Controller {
 	constructor(...args) {
 		super(...args);
 
-	    this.constructor.EVENTS.forEach((e) => {
-			for (let [i, el] of (e.selector ?
-					zest(e.selector, this.$element.context).entries() :
+	    this.constructor.EVENTS.forEach((behaviour) => {
+			for (let [i, el] of (behaviour.ev.selector ?
+					zest(behaviour.ev.selector, this.$element.context).entries() :
 					[this.$element.context].entries())) {
 				this._closurize((_key, _fn, _el, _i) => {
 					let __fn = (...args) => {
-						this._preEventedFunction(args[0], _el, _i, e);
+						this._preEventedFunction(args[0], _el, _i, behaviour.ev);
 						_fn(_el, _i, ...args);
-						this._postEventedFunction(_key, _fn, _el, _i, e);
+						this._postEventedFunction(_key, _fn, _el, _i, behaviour.ev);
 					}
-					bean.on(el, e.type, e.delegatee || _fn, e.delegatee ? _fn : null);
-				}, this, key, fn, el, i);
+					bean.on(el, behaviour.ev.type, behaviour.ev.delegate || _fn, behaviour.ev.delegate ? _fn : null);
+				}, this, behaviour.ev, behaviour.fn, el, i);
 				this._digest();
 			}
 		});
 	}
 	_preEventedFunction (descriptor, ev, ...args) {
-        if (!this._isVoid(descriptor.delegator)) {
+        if (!this._isVoid(descriptor.delegate)) {
 			let el = ev.currentTarget.parentNode;
 			while (!zest.matches(el, descriptor.delegate)) { el = el.parentNode; }
 			let list = Array.prototype.slice.call(el.parentNode.children);
@@ -153,14 +116,9 @@ export class EventedController extends Controller {
 EventedController.$inject = ["$element", "$timeout"];
 ```
 
-
-First, there's the *StateController*, a behavioural convenience machine ...
-Write your member foos - controller methods - with the `Behavioural`-Decorator
-
-The StateController
-
 ## CHANGELOG
 
+*0.0.2* Minimalism - getting rid of everything too fancy
 *0.0.1* Migration - the beginnings of a complete rewrite of the behaviour-paradigm to decorators ...
 
 ## MIGRATION CHANGELOG ng-harmony
