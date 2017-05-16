@@ -117,7 +117,7 @@ EventedController.$inject = ["$element", "$timeout"];
 ```
 
 ## CHANGELOG
-
+*0.0.3* Publish Bump
 *0.0.2* Minimalism - getting rid of everything too fancy
 *0.0.1* Migration - the beginnings of a complete rewrite of the behaviour-paradigm to decorators ...
 
