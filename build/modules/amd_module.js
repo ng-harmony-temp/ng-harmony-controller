@@ -1,4 +1,4 @@
-import bean from "fat/bean";
+import bean from "bean";
 import zest from "zest";
 import { Controller } from "ng-harmony-core";
 import { Log, NotImplementedError, MissingBehaviourError, BehaviourError, StateTransitionError } from "ng-harmony-log";
