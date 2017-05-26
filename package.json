@@ -1,7 +1,7 @@
 {
   "name": "ng-harmony-controller",
   "description": "Enhanced Controllers",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://github.com/ng-harmony/ng-harmony-controller",
   "author": {
     "name": "joehannes",
@@ -36,8 +36,8 @@
   },
   "dependencies": {
     "bean": "^1.0.15",
-    "ng-harmony-core": "^0.1.2",
-    "ng-harmony-decorator": "^0.3.15",
+    "ng-harmony-core": "^0.1.9",
+    "ng-harmony-decorator": "^0.3.26",
     "ng-harmony-log": "^0.1.7",
     "zest": "^0.1.3"
   },

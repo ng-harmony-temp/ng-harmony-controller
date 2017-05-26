@@ -12,7 +12,7 @@ export let EventedController = class EventedController extends Controller {
 			for (let [i, el] of behaviour.ev.selector ? zest(behaviour.ev.selector, this.$element.context).entries() : [this.$element.context].entries()) {
 				this._closurize((_key, _fn, _el, _i) => {
 					let __fn = (...args) => {
-						this._preEventedFunction(args[0], _el, _i, behaviour.ev);
+						this._preEventedFunction(behaviour.ev, args[0], _el, _i);
 						_fn(_el, _i, ...args);
 						this._postEventedFunction(_key, _fn, _el, _i, behaviour.ev);
 					};
