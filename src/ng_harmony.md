@@ -56,7 +56,7 @@ export class EventedController extends Controller {
 						this._postEventedFunction(_key, _fn, _el, _i, behaviour.ev);
 					}
 					bean.on(el, behaviour.ev.type, behaviour.ev.delegate || _fn, behaviour.ev.delegate ? _fn : null);
-				}, this, behaviour.ev, behaviour.fn, el, i);
+				}, this, behaviour.ev, this[behaviour.fn], el, i);
 				this._digest();
 			}
 		});
