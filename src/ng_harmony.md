@@ -74,12 +74,6 @@ export class EventedController extends Controller {
 		}
 	}
 	_postEventedFunction (key, fn, el, i, descriptor) {
-        if (this.log) {
-            this.log({
-                level: "info",
-                msg: "Method _" + key + "_ was triggered"
-            })
-        }
 		this._emit(key, descriptor);
 	}
 	_emit (triggerFn, descriptor) {
