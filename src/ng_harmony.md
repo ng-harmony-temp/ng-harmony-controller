@@ -47,8 +47,8 @@ export class EventedController extends Controller {
 
 	    this.constructor.EVENTS.forEach((behaviour) => {
 			for (let [i, el] of (behaviour.ev.selector ?
-					zest(behaviour.ev.selector, this.$element.context).entries() :
-					[this.$element.context].entries())) {
+					zest(behaviour.ev.selector, this.$element[0]).entries() :
+					[this.$element[0]].entries())) {
 				this._closurize((_key, _fn, _el, _i) => {
 					let __fn = (...args) => {
 						this._preEventedFunction(behaviour.ev, args[0], _el, _i);
