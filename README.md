@@ -1,8 +1,8 @@
-![Harmony = 6 + 7;](./src/logo.png "Harmony - Fire in my eyes")
+![Harmony = 6 + 7;](./src/logo.png)
 
 #CHECK OUT THE NEW DEMO
-Code (full project): [ng-harmony-demo](http://www.github.com/ng-harmony/ng-harmony-demo)
-In the wild (works if you're not spotify-API-blacklisted like my IP): [ng-harmony-demo](http://joehannes-jobs.github.io/compucorp)
+* Code (full project): [ng-harmony-demo](http://www.github.com/ng-harmony/ng-harmony-demo)
+* In the wild (works if you're not spotify-API-blacklisted like my IP): [ng-harmony-demo](http://joehannes-jobs.github.io/compucorp)
 
 
 ## Synopsis
