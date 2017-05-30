@@ -5,7 +5,7 @@
 
 A Controller collection for different purposes ...
 
-![Harmony = 6 + 7;](logo.png "Harmony - Fire in my eyes")
+![Harmony = 6 + 7;](./logo.png)
 
 ## Concept
 

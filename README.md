@@ -10,11 +10,11 @@ An Event-Mechanism for the Controller - Use in combination with the @Evented pro
 ## Code Example
 
 ```javascript
-import { EventedController as Ctrl } from "ng-harmony";
+import { EventedController as Ctrl } from "ng-harmony-controller";
 import { Component, Controller, Loggging, Evented } from "ng-harmony-decorator";
 ```
 
-We can use this lib in such a way *[...]*
+We can use this lib in combination with the Evented-Decorator of ng-harmony-decorator
 
 ```javascript
 @Component({
