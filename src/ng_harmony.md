@@ -10,9 +10,6 @@ A Controller collection for different purposes ...
 ## Concept
 
     * Advanced Controller with In-Controller Eventing.
-    * RoutingController for use with ngh-modules utilizing `angular-ui-router`
-    * StatefulController ... a Redux like state-mechanism. But not single super-state, but each and every Controller knows its own stuff ... intercommunication mechanisms ...
-    * DataController ... integration of ngh-model with it's dedicated validation-models and AJAX-Services
 
 Use it in conjunction with
 
