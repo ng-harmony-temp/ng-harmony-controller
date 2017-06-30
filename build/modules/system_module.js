@@ -13,11 +13,11 @@ export let EventedController = class EventedController extends Controller {
 				this._closurize((_key, _fn, _el, _i) => {
 					let __fn = (...args) => {
 						this._preEventedFunction(_key, args[0], _el);
-						_fn(_el, ...args);
-						this._postEventedFunction(_key, args[0], _el, _fn.name);
+						this[_fn](_el, ...args);
+						this._postEventedFunction(_key, args[0], _el, _fn);
 					};
 					bean.on(_el, behaviour.ev.type, behaviour.ev.delegate || __fn, behaviour.ev.delegate ? __fn : null);
-				}, this, behaviour.ev, this[behaviour.fn], el, i);
+				}, this, behaviour.ev, behaviour.fn, el, i);
 				this._digest();
 			}
 		});
