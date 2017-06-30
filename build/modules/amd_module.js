@@ -13,7 +13,7 @@ export let EventedController = class EventedController extends Controller {
 				this._closurize((_key, _fn, _el, _i) => {
 					let __fn = (...args) => {
 						this._preEventedFunction(_key, args[0], _el);
-						_fn(_el, $n, ...args);
+						_fn(_el, ...args);
 						this._postEventedFunction(_key, args[0], _el, _fn.name);
 					};
 					bean.on(_el, behaviour.ev.type, behaviour.ev.delegate || __fn, behaviour.ev.delegate ? __fn : null);
@@ -25,12 +25,12 @@ export let EventedController = class EventedController extends Controller {
 	_preEventedFunction(descriptor, ev, el) {
 		if (descriptor.delegate) {
 			let nodes = zest(descriptor.delegate, this.$element[0]).entries();
-			nodes.forEach((node, $n) => {
+			for (let [$n, node] of nodes) {
 				if (ev.currentTarget.isEqualNode(node)) {
 					this.$scope.$n = $n;
-					return false;
+					break;
 				}
-			});
+			};
 		} else {
 			let _el = ev.currentTarget;
 			let list = Array.prototype.slice.call(_el.parentNode.children);
