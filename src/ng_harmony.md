@@ -48,14 +48,6 @@ export class EventedController extends Controller {
 					[this.$element[0]].entries())) {
 				this._closurize((_key, _fn, _el, _i) => {
 					let __fn = (...args) => {
-						if (_key.delegate) {
-							let nodes = zest(_key.delegate, this.$element[0].entries());
-							nodes.forEach((node, $n) => {
-								if (args[0].currentTarget.isEqualNode(node)) {
-									this.$scope.$n = $n;
-								}
-							});
-						}
 						this._preEventedFunction(_key, args[0], _el, $n);
 						_fn(_el, $n, ...args);
 						this._postEventedFunction(_key, args[0], _el, $n, _fn.name);
@@ -67,15 +59,19 @@ export class EventedController extends Controller {
 		});
 	}
 	_preEventedFunction (descriptor, ev, el, $n) {
-        if (!this._isVoid(descriptor.delegate)) {
-			let el = ev.currentTarget.parentNode;
-			while (!zest.matches(el, descriptor.delegate)) { el = el.parentNode; }
-			let list = Array.prototype.slice.call(el.parentNode.children);
-			this.$scope.n = list.indexOf(el);
-		} else {
-			let el = ev.currentTarget;
-			let list = Array.prototype.slice.call(el.parentNode.children);
-			this.$scope.n = list.indexOf(el);
+		if (descriptor.delegate) {
+			let nodes = zest(descriptor.delegate, this.$element[0].entries());
+			nodes.forEach((node, $n) => {
+				if (ev.currentTarget.isEqualNode(node)) {
+					this.$scope.$n = $n;
+					return false;
+				}
+			});
+		}
+		else {
+			let _el = ev.currentTarget;
+			let list = Array.prototype.slice.call(_el.parentNode.children);
+			this.$scope.$n = list.indexOf(_el);
 		}
 	}
 	_postEventedFunction (descriptor, ev, el, $n, triggerFn) {
