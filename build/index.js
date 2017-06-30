@@ -14,17 +14,25 @@ export class EventedController extends Controller {
 					[this.$element[0]].entries())) {
 				this._closurize((_key, _fn, _el, _i) => {
 					let __fn = (...args) => {
-						this._preEventedFunction(behaviour.ev, args[0], _el, _i);
-						_fn(_el, _i, ...args);
-						this._postEventedFunction(_key, _fn, _el, _i, behaviour.ev);
+						if (_key.delegate) {
+							let nodes = zest(_key.delegate, this.$element[0].entries());
+							nodes.forEach((node, $n) => {
+								if (args[0].currentTarget.isEqualNode(node)) {
+									this.$scope.$n = $n;
+								}
+							});
+						}
+						this._preEventedFunction(_key, args[0], _el, $n);
+						_fn(_el, $n, ...args);
+						this._postEventedFunction(_key, args[0], _el, $n, _fn.name);
 					}
 					bean.on(_el, behaviour.ev.type, behaviour.ev.delegate || __fn, behaviour.ev.delegate ? __fn : null);
-				}, this, behaviour.ev, this[behaviour.fn].bind(this), el, i);
+				}, this, behaviour.ev, this[behaviour.fn], el, i);
 				this._digest();
 			}
 		});
 	}
-	_preEventedFunction (descriptor, ev, ...args) {
+	_preEventedFunction (descriptor, ev, el, $n) {
         if (!this._isVoid(descriptor.delegate)) {
 			let el = ev.currentTarget.parentNode;
 			while (!zest.matches(el, descriptor.delegate)) { el = el.parentNode; }
@@ -36,14 +44,17 @@ export class EventedController extends Controller {
 			this.$scope.n = list.indexOf(el);
 		}
 	}
-	_postEventedFunction (key, fn, el, i, descriptor) {
-		this._emit(key, descriptor);
+	_postEventedFunction (descriptor, ev, el, $n, triggerFn) {
+		this._emit(triggerFn, descriptor, { ev, el, $n });
 	}
-	_emit (triggerFn, descriptor) {
+	_emit (triggerFn, descriptor, opts) {
 		this.$scope.$emit("change", {
 			scope: this,
 			triggerFn: triggerFn,
-			triggerTokens: descriptor
+			triggerTokens: descriptor,
+			ev: opts.ev,
+			el: opts.el,
+			$n: opts.$n
 		});
 	}
 }
