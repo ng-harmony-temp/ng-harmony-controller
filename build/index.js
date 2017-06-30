@@ -26,7 +26,7 @@ export class EventedController extends Controller {
 	}
 	_preEventedFunction (descriptor, ev, el) {
 		if (descriptor.delegate) {
-			let nodes = zest(descriptor.delegate, this.$element[0].entries());
+			let nodes = zest(descriptor.delegate, this.$element[0]).entries();
 			nodes.forEach((node, $n) => {
 				if (ev.currentTarget.isEqualNode(node)) {
 					this.$scope.$n = $n;
